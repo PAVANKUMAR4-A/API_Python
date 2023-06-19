@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Download Excel</title>
+</head>
+<body>
+<!--    <nav>-->
+<!--        <a href="/File Download/">Download Your File</a>-->
+<!--        <a href="/File Display/">Display File Data</a>-->
+
+<!--    </nav>-->
+
+    <h1> Download Excel File or Display Excel Content Here!</h1>
+
+    <button id ='downloadButton'>Download Excel </button>
+    <script>
+        document.getElementById('downloadButton').addEventListener('click',function(){
+            window.location.href='/API/1.0/download_excel';
+            });
+    </script>
+
+<button id ='displayButton'>Display Excel content </button>
+    <script>
+        document.getElementById('displayButton').addEventListener('click',function(){
+            window.location.href='/API/1.0/display_data';
+            });
+    </script>
+
+</body>
+</html>

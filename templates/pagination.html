@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paged Data Display</title>
+     <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 2px solid #ddd;
+            padding: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+     <table>
+        <thead>
+            <tr>
+                {% for key in all_keys %}
+                    <th>{{ key }}</th>
+                {% endfor %}
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for item in response['data']%}
+            <tr>
+                {% for key, value in item.items() %}
+
+                <td>{{ value }}</td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+    <!-- Pagination buttons -->
+    <div class="pagination">
+        <!-- Previous page button -->
+        {% if response['Page Num'] > 1 %}
+            <a href="/API/1.0/display_paged_data?page={{ response['Page Num'] - 1 }}&page_limit={{ response['Page Size'] }}">&gt;</a>
+        {% endif %}
+
+        <!-- Page buttons -->
+        {% for i in range(1, response['Total Pages'] + 1) %}
+            {% if response['Page Num'] == i %}
+                <a href="/API/1.0/display_paged_data?page={{ i }}&page_limit={{ response['Page Size'] }}" class="active">{{ i }}</a>
+            {% else %}
+                <a href="/API/1.0/display_paged_data?page={{ i }}&page_limit={{ response['Page Size'] }}">{{ i }}</a>
+            {% endif %}
+        {% endfor %}
+
+
+        <!-- Next page button -->
+        {% if response['Page Num'] < response['Total Pages'] %}
+            <a href="/API/1.0/paged_data?page={{ response['Page Num'] + 1 }}&page_limit={{ response['Page Size'] }}">&lt;</a>
+        {% endif %}
+    </div>
+
+
+
+</body>
+</html>
