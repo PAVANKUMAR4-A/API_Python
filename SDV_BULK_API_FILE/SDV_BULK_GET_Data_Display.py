@@ -1,7 +1,7 @@
 import pandas as pd
 import  numpy as np
 from SDV_BULK_API_FILE import BULK_Pickle_file_config_file
-
+import openpyxl
 #pickle_config = BULK_Pickle_file_config_file.Pickle_file_configuration()
 #config_file = pickle_config.call_configuration_table(input_data_dictionary['ProcessAreaId'])
 
@@ -36,4 +36,5 @@ class Generated_data_display():
 
         filtered_display_data = concat_dataframe[Display_data_columns]
 
+        print('Filtered Data', filtered_display_data)
         return(filtered_display_data)

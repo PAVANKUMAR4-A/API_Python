@@ -1,6 +1,6 @@
 import json
 import requests
-
+import numpy as np
 import pandas as pd
 from flask import Flask, request,render_template,send_file,jsonify
 from SDV_BULK_API_FILE.Header_DB import Header_DB_Class
@@ -14,8 +14,84 @@ app = Flask(__name__,template_folder='templates')
 input_dict= {}
 dat_frame = pd.DataFrame([])
 
+# class NumpyEncoder(json.JSONEncoder):
+#     def default(self, obj):
+#         if isinstance(obj, np.integer):
+#             return int(obj)
+#         return super().default(obj)
+
 try:
-    @app.route("/API/1.0/DataGenRequestSet", methods=['POST','GET'])
+
+    def convert_int64_to_int(obj):
+        if isinstance(obj, np.int64):
+            return int(obj)
+        return obj
+
+    @app.route("/API/1.0/DataGenResponseSet", methods=['GET'])
+    def data_gen_response_set():
+        # print('Data Frame', dat_frame)
+        # print('input Dictionary', input_dict)
+
+        matching_data = {"Entity": "PBUKR", "Start Date": "PLFEZ", "End Date": "PLSEZ", "Client": "ZZ_CLIENT",
+                    "Requester E-Mail": "Email", "Engagement Type": "PRART", "Eng Partner": "Z3", "Eng Manager": "Z4"}
+
+
+        display_object = Generated_data_display()
+        response_display = display_object.Screen_Data_display(dat_frame, input_dict)
+        #response_display = response_display.applymap(lambda x: int(x) if isinstance(x, np.int64) else x)
+        # print("second response")
+        response_display = response_display.applymap(
+            lambda x: x.astype(int) if isinstance(x, (np.int64)) else x)
+        print("return printed_display_data", response_display)
+        #print('json responded data', response_display.to_json())
+
+        header_info = {
+            "processAreaId": input_dict['ProcessAreaId'],
+            "dataSetName": input_dict["DataSetName"],
+            "TargetSys": input_dict["TargetSys"],
+            "CountryKey": input_dict['CountryKey'],
+            #"numOfRecords": input_dict['NumOfRecords']
+        }
+
+        input_set = []
+
+        num_rows, num_cols = response_display.shape
+        for row_index, row in response_display.iterrows():
+            for col_index, value in enumerate(row):
+                if response_display.columns[col_index] in matching_data:
+                    input_set.append({
+
+                        "fieldName": matching_data[response_display.columns[col_index]],
+                        "fieldDesc": response_display.columns[col_index],
+                        "fieldValue": response_display.iloc[row_index, col_index],
+                        'fieldIndex': row_index
+                             })
+
+
+            # Check if all values in the current row are processed
+                if col_index == num_cols - 1:
+                    print(f"All values in Row {row_index} processed.")
+
+        json_data = {
+            "headerInfo": header_info,
+            "inputSet": input_set
+
+
+        }
+
+        print('JSON DATA', json_data)
+
+        serialized_data = json.dumps(json_data, default=convert_int64_to_int)
+
+        return serialized_data, 200, {'Content-Type': 'application/json'}
+
+        # header_info_json = json.dumps(header_info)
+        # input_set_json = json.dumps(input_set)
+        #
+        # return render_template('tables.html', header_info=header_info_json, input_set=input_set_json, )
+
+
+    @app.route("/API/1.0/DataGenRequestSet", methods=['POST'])
     def data_gen_request_set():
         # df = pd.read_excel(r'file_paths/Conca_df.xlsx')
 
@@ -54,6 +130,8 @@ try:
         response_display = display_object.Screen_Data_display(dat_frame, input_dict)
         # print("second response")
         print("return printed_display_data", response_display)
+
+
         response_display.to_excel(r'sample_synthetic/output_file.xlsx', index=False)
 
         # dataset_guid = request.args.get('DataSet_GUID')
@@ -68,7 +146,7 @@ try:
         #
         # print('filtered df data ', filtered_df)
         # # Prepare the response
-        # response = {
+        ##  response = {
         #     'filtered_data': filtered_df.to_dict(orient='records')
         # }
         #
@@ -95,7 +173,8 @@ try:
            #  'data':response,
             'Page Num': page,
             'Page Size': page_limit,
-            'Total Pages': total_pages
+            'Total Pages': total_pages,
+            # 'Index':row_index
         }
         # return jsonify(response)
 

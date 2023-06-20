@@ -10,7 +10,7 @@ json = {
 
 
 
-"DataSetName": "TEST_ENG",
+"DataSetName": "TEST_ENG4",
 
 
 
@@ -20,17 +20,25 @@ json = {
 
 
 
-"CountryKey": "US",
+
+"NumOfRecords": 8,
 
 
 
 
-"NumOfRecords": 3,
+"Created_By" :"T_WIP_USER5",
+"Created_On" :"12/6/2023",
+"Changed_On": "27/6/2023",
+
+"Changed_By":"Bhuvanesh K kumar",
+"Status": "First Status",
+"Stage": "First Stage",
 
 
+"TargetSys": "SDD070",
 
+"CountryKey": "CAN-US"
 
-"CreatedBy" :"T_WIP_USER"
 
 
 
@@ -105,7 +113,7 @@ json = {
 
 
 
-"FieldValue": "2023-06-09"
+"FieldValue": "2023-06-03"
 
 
 
@@ -149,7 +157,7 @@ json = {
 
 
 
-"FieldValue": ""
+"FieldValue": "Hello"
 
 
 
@@ -218,7 +226,7 @@ json = {
 
 
 
-"FieldValue": "vamsi.nilla@email.com"
+"FieldValue": "p@1.andala@gmail.com"
 
 
 

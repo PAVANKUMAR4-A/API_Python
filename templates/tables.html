@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tables</title>
+</head>
+<body>
+    <h1>Header Info</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Key</th>
+                <th>Value</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for key, value in header_info.items() %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h1>Input Set</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Field Name</th>
+                <th>Field Description</th>
+                <th>Field Value</th>
+                <th>Field Index</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in input_set %}
+            <tr>
+                <td>{{ item.fieldName }}</td>
+                <td>{{ item.fieldDesc }}</td>
+                <td>{{ item.fieldValue }}</td>
+                <td>{{ item.fieldIndex }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
