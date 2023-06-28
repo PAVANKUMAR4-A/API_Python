@@ -37,4 +37,4 @@ class Generated_data_display():
         filtered_display_data = concat_dataframe[Display_data_columns]
 
         print('Filtered Data', filtered_display_data)
-        return(filtered_display_data)
+        return (filtered_display_data)

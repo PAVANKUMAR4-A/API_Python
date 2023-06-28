@@ -66,23 +66,27 @@
     <div class="pagination">
         <!-- Previous page button -->
         {% if response['Page Num'] > 1 %}
-            <a href="/API/1.0/display_paged_data?page={{ response['Page Num'] - 1 }}&page_limit={{ response['Page Size'] }}">&gt;</a>
+            <a href="/API/1.0/DataGenResponseSet?page={{ response['Page Num'] - 1 }}&per_page={{ response['Page Size'] }}">&gt;</a>
         {% endif %}
 
         <!-- Page buttons -->
         {% for i in range(1, response['Total Pages'] + 1) %}
             {% if response['Page Num'] == i %}
-                <a href="/API/1.0/display_paged_data?page={{ i }}&page_limit={{ response['Page Size'] }}" class="active">{{ i }}</a>
+                <a href="/API/1.0/DataGenResponseSet?page={{ i }}&per_page={{ response['Page Size'] }}" class="active">{{ i }}</a>
             {% else %}
-                <a href="/API/1.0/display_paged_data?page={{ i }}&page_limit={{ response['Page Size'] }}">{{ i }}</a>
+                <a href="/API/1.0/DataGenResponseSet?page={{ i }}&per_page={{ response['Page Size'] }}">{{ i }}</a>
             {% endif %}
         {% endfor %}
 
 
         <!-- Next page button -->
         {% if response['Page Num'] < response['Total Pages'] %}
-            <a href="/API/1.0/paged_data?page={{ response['Page Num'] + 1 }}&page_limit={{ response['Page Size'] }}">&lt;</a>
+            <a href="/API/1.0/DataGenResponseSet?page={{ response['Page Num'] + 1 }}&per_page={{ response['Page Size'] }}">&lt;</a>
         {% endif %}
+    </div >
+    <br>
+    <div>
+        {{input_set}}
     </div>
 
 

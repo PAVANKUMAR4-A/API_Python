@@ -17,6 +17,7 @@ import time
 class Bulk_Driver():
 
     def bulk_driver_method(self,header,body_list):
+        concat_dataframe = pd.DataFrame([])
 
         print("entered bulk driver method")
 
@@ -33,16 +34,12 @@ class Bulk_Driver():
                 field_value = 0
             input_data_dictionary[j['FieldDesc']] = field_value
 
-        print(input_data_dictionary, "input_data_dictionary")
-
-        #input_data_dictionary['random_state'] = random.randint(1, 50000)
-
         json_ui = json.dumps(input_data_dictionary)
 
         start = time.time()
         if int(input_data_dictionary['NumOfRecords']) != int(0):
 
-            concat_dataframe = pd.DataFrame([])
+
 
             try:
                 pickle_config = BULK_Pickle_file_config_file.Pickle_file_configuration()
